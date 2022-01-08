@@ -47,13 +47,13 @@ int main(int argc, char *argv[])  {
         // Construct an absolute path to the executable that we're trying to launch.
         char full_executable_path[4096] = { 0 };
         strcpy(full_executable_path, current_directory);
-        strcat(full_executable_path, "/");
+        strcat(full_executable_path, "/.blobs/");
         strcat(full_executable_path, executable);
 
         // Construct all of the arguments for the linker.
         char *linker_args[] = { "--library-path", library_path, "--inhibit-rpath", "", "--inhibit-cache" };
         char **combined_args = malloc(sizeof(linker_args) + sizeof(char*) * (argc + 1));
-        combined_args[0] = linker_basename;
+        combined_args[0] = argv[0];
         memcpy(combined_args + 1, linker_args, sizeof(linker_args));
         // We can't use `--inhinit-rpath` or `--inhibit-cache` with the musl linker.
         int offset = (sizeof(linker_args) / sizeof(char*)) + 1 - ({{full_linker}} ? 0 : 3);

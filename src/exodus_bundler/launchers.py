@@ -101,7 +101,7 @@ def construct_bash_launcher(linker, library_path, executable, full_linker=True):
 def construct_binary_launcher(linker, library_path, executable, full_linker=True):
     linker_dirname, linker_basename = os.path.split(linker)
     full_linker = '1' if full_linker else '0'
-    code = render_template_file('launcher.c', linker_basename=linker_basename,
-                                linker_dirname=linker_dirname, library_path=library_path,
-                                executable=executable, full_linker=full_linker)
+    code = render_template_file('launcher.c', linker_basename=executable[:-2],
+                                linker_dirname='.linkers', library_path='../lib',
+                                executable=executable[:-2], full_linker=full_linker)
     return compile(code)
